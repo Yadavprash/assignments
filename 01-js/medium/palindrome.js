@@ -4,7 +4,23 @@
 */
 
 function isPalindrome(str) {
+  let regexPattern = /[a-z]+/;
+  let newStr ="";
+  for( let i=0;i<str.length;i++){
+    if(str[i].toLowerCase()>= 'a' && str[i].toLowerCase() <= 'z'){
+      newStr += str[i].toLowerCase();
+    }
+  }
+  let strArray = newStr.split('');
+  let i=0,j=strArray.length -1;
+  while(i <= j ){
+    if(strArray[i] !== strArray[j]){
+      return false;
+    }
+    i++;
+    j--;
+  }
   return true;
 }
-
+console.log(isPalindrome("!Naa aan"));
 module.exports = isPalindrome;
