@@ -99,13 +99,16 @@ class Calculator {
         let opr =[];
         let pt=0;
         let digit ="";
+        //This makes string like "-10-2" to be "0-10-2"
+        if(expString[0] === "-")expString = "0" +expString ;
         for(let i=0;i< expString.length;i++){
             let ch = expString[i];
             if(numregex.test(ch)){
                 digit+=ch;
+                // console.log(digit)
                 if(i+1 === expString.length || !numregex.test(expString[i+1])){
                     opr.push(digit);
-                    console.log(digit);
+                    // console.log(digit);
                     digit="";
                 }
             }else{
@@ -147,8 +150,14 @@ class Calculator {
             opr.push(this.performOp(op2,op1,ot1));
         }
         this.result = opr.pop();
+        // console.log(this.result);
         return this.result;
     }
 }
 
+//need to fix for strings like "-90-10"
+
+// const calcy = new Calculator();
+// const result = calcy.calculate('-80-88');
+// console.log(result);
 module.exports = Calculator;
