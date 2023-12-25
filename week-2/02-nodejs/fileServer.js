@@ -18,4 +18,43 @@ const path = require('path');
 const app = express();
 
 
+
+app.get('/files', (req, res)=>{
+    const allfiles = [];
+    fs.readdir(path.join(__dirname, './files'),(err, files)=>{
+        // console.log("hi");
+        if(err){
+            res.status(500).send("Internal Server Error");
+        }else{
+            files.forEach((file)=>{
+                allfiles.push(file);
+            })
+            // console.log(allfiles);
+            res.status(200).json(allfiles);
+        }
+    })
+});
+app.get('/file/:fileName',  (req, res)=>{
+    const { fileName } = req.params;
+    fs.readFile( path.join(__dirname, `./files/${fileName}`) ,'utf-8',( err , data) =>{
+        console.log(data);
+        if(err){
+            res.status(404).send("File not found");
+        }else{
+            res.status(200).send(data);
+        }
+    })
+});
+
+app.all('*', (req, res) => {
+    res.status(404).send('Route not found');
+});
+// 404 Middleware
+// app.use((req, res, next) => {
+//     res.status(404).send("404 - Not Found!")
+// });
+app.listen( 3001 , ()=>{
+    console.log("Listening on port 3000");
+})
+
 module.exports = app;
