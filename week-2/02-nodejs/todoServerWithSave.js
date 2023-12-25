@@ -69,17 +69,16 @@ let todos = [];
 //     }
 // ];
 
-// saveToDos();
-// fs.readFile(path.join(__dirname +'/save/saved.txt'), 'utf8', (err, data) => {
-//     if (err) {
-//         console.error('Error reading file:', err);
-//     } else {
-//         // Parse the JSON data back to an array
-//         todos = JSON.parse(data);
-//         // Do something with the loadedTodos array
-//         console.log('Loaded todos:', todos);
-//     }
-// });
+fs.readFile(path.join(__dirname +'/save/saved.txt'), 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading file:', err);
+    } else {
+        // Parse the JSON data back to an array
+        todos = JSON.parse(data);
+        // Do something with the loadedTodos array
+        console.log('Loaded todos:', todos);
+    }
+});
 
 
 
@@ -122,7 +121,7 @@ app.post('/todos', (req, res) => {
         "description": description
     };
     todos.push(todo);
-    // saveToDos();
+    saveToDos();
     res.status(201).send({"id": id});
 });
 app.put('/todos/:id', (req, res) => {
@@ -138,7 +137,7 @@ app.put('/todos/:id', (req, res) => {
     } else {
         res.status(404).send({error: "404 - Not Found!"});
     }
-    // saveToDos();
+    saveToDos();
 });
 app.delete('/todos/:id', (req, res) => {
     const { id }= req.params;
@@ -152,7 +151,7 @@ app.delete('/todos/:id', (req, res) => {
     }else{
         res.status(404).send({error: "404 - Not Found!"});
     }
-    // saveToDos();
+    saveToDos();
 });
 
 //404 middleware
@@ -160,7 +159,7 @@ app.use((req, res, next) => {
     res.status(404).send("404 - Not Found!")
 });
 
-app.listen(3001, () => {
+app.listen(3000, () => {
     console.log('Listening on port 3000');
 });
 module.exports = app;
